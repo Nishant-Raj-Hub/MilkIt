@@ -1,7 +1,7 @@
-const express = require("express")
-const MilkRecord = require("../models/MilkRecord")
-const { authenticateToken } = require("../middleware/auth")
-const { validateDate, validateMilkQuantity } = require("../utils/validation")
+import express from "express";
+import MilkRecord from "../models/MilkRecord.js";
+import { authenticateToken } from "../middleware/auth.js";
+import { validateDate, validateMilkQuantity } from "../utils/validation.js";
 
 const router = express.Router()
 
@@ -494,4 +494,4 @@ router.post("/bulk-create", async (req, res) => {
   }
 })
 
-module.exports = router
+export default router;

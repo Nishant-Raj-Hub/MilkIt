@@ -141,10 +141,10 @@ const validateMilkQuantity = (liters) => {
   }
 }
 
-module.exports = {
+export {
   validateUsername,
   validatePhone,
   validatePassword,
   validateDate,
   validateMilkQuantity,
-}
+};

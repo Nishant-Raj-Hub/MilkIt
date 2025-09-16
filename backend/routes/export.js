@@ -1,6 +1,6 @@
-const express = require("express")
-const { authenticateToken } = require("../middleware/auth")
-const { getExportData } = require("../utils/export")
+import express from "express";
+import { authenticateToken } from "../middleware/auth.js";
+import { getExportData } from "../utils/export.js";
 
 const router = express.Router()
 
@@ -64,4 +64,4 @@ router.get("/share-link", async (req, res) => {
   }
 })
 
-module.exports = router
+export default router;

@@ -1,15 +1,15 @@
-const express = require("express")
-const mongoose = require("mongoose")
-const cors = require("cors")
-const helmet = require("helmet")
-const rateLimit = require("express-rate-limit")
-const cron = require("node-cron")
-require("dotenv").config()
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import cron from "node-cron";
+import "dotenv/config";
 
-const authRoutes = require("./routes/auth")
-const milkRoutes = require("./routes/milk")
-const exportRoutes = require("./routes/export")
-const { cleanupOldRecords } = require("./utils/cleanup")
+import authRoutes from "./routes/auth.js";
+import milkRoutes from "./routes/milk.js";
+import exportRoutes from "./routes/export.js";
+import { cleanupOldRecords } from "./utils/cleanup.js";
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -94,4 +94,4 @@ app.listen(PORT, () => {
   console.log(`📊 Environment: ${process.env.NODE_ENV}`)
 })
 
-module.exports = app
+export default app;

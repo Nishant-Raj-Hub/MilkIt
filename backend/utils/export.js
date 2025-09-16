@@ -2,7 +2,7 @@
  * Data export utilities for milk records
  */
 
-const MilkRecord = require("../models/MilkRecord")
+import MilkRecord from "../models/MilkRecord.js";
 
 /**
  * Generate CSV data for milk records
@@ -121,8 +121,4 @@ const getExportData = async (userId, startDate, endDate, format = "text") => {
   }
 }
 
-module.exports = {
-  generateCSV,
-  generateTextSummary,
-  getExportData,
-}
+export { getExportData };

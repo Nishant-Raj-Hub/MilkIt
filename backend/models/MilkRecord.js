@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose";
 
 const milkRecordSchema = new mongoose.Schema(
   {
@@ -62,4 +62,4 @@ milkRecordSchema.pre("save", function (next) {
   next()
 })
 
-module.exports = mongoose.model("MilkRecord", milkRecordSchema)
+export default mongoose.model("MilkRecord", milkRecordSchema);

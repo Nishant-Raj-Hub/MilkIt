@@ -1,7 +1,7 @@
-const express = require("express")
-const User = require("../models/User")
-const { generateToken, authenticateToken } = require("../middleware/auth")
-const rateLimit = require("express-rate-limit")
+import express from "express";
+import User from "../models/User.js";
+import { generateToken, authenticateToken } from "../middleware/auth.js";
+import rateLimit from "express-rate-limit";
 
 const router = express.Router()
 
@@ -338,4 +338,4 @@ router.post("/logout", authenticateToken, (req, res) => {
   })
 })
 
-module.exports = router
+export default router;

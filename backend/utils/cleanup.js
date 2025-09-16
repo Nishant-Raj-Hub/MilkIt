@@ -1,4 +1,4 @@
-const MilkRecord = require("../models/MilkRecord")
+import MilkRecord from "../models/MilkRecord.js";
 
 /**
  * Delete milk records older than 6 months
@@ -41,7 +41,4 @@ const getDatabaseStats = async () => {
   }
 }
 
-module.exports = {
-  cleanupOldRecords,
-  getDatabaseStats,
-}
+export { cleanupOldRecords };
