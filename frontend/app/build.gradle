@@ -1,16 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.plugin.compose'
+    id 'org.jetbrains.compose'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
-}
-
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -18,17 +12,26 @@ android {
     compileSdk 34
 
     signingConfigs {
-        release {
-            if (keystorePropertiesFile.exists()) {
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-            }
+        debug {
+            // Using default debug keystore
         }
-            storePassword keystoreProperties['keystore.password']
-            keyAlias keystoreProperties['keystore.alias']
-            keyPassword keystoreProperties['key.password']
+        
+        // Only create release config if all properties are available
+        def keystoreFile = rootProject.file("keystore.properties")
+        if (keystoreFile.exists()) {
+            def props = new Properties()
+            props.load(new FileInputStream(keystoreFile))
+            if (props.containsKey('storeFile') && 
+                props.containsKey('storePassword') && 
+                props.containsKey('keyAlias') && 
+                props.containsKey('keyPassword')) {
+                release {
+                    storeFile rootProject.file(props['storeFile'])
+                    storePassword props['storePassword']
+                    keyAlias props['keyAlias']
+                    keyPassword props['keyPassword']
+                }
+            }
         }
     }
 
@@ -50,8 +53,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.findByName('release') ?: signingConfigs.debug
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -73,7 +79,7 @@ android {
     }
     
     composeOptions {
-        kotlinCompilerExtensionVersion '1.5.4'
+        kotlinCompilerExtensionVersion '1.4.7'
     }
     
     packagingOptions {
