@@ -9,7 +9,9 @@ plugins {
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
     namespace 'com.milkit.app'
@@ -17,7 +19,13 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(keystoreProperties['keystore.file'])
+            if (keystorePropertiesFile.exists()) {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
             storePassword keystoreProperties['keystore.password']
             keyAlias keystoreProperties['keystore.alias']
             keyPassword keystoreProperties['key.password']
@@ -36,18 +44,17 @@ android {
             useSupportLibrary true
         }
 
-        // API Base URL
-        buildConfigField "String", "API_BASE_URL", "\"http://10.0.2.2:3000/api\""
+        // API Base URL with configurable backend URL
+        def backendUrl = project.hasProperty("backendUrl") ? project.getProperty("backendUrl") : "http://10.0.2.2:3000/api"
+        buildConfigField "String", "BASE_URL", "\"${backendUrl}\"" 
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
             signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // Updated API URL for production
-            buildConfigField "String", "API_BASE_URL", "\"https://ultimate-barbe-nishant-raj-hub-ec147a4c.koyeb.app/api\""
         }
     }
     
