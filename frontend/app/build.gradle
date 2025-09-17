@@ -7,16 +7,29 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     namespace 'com.milkit.app'
     compileSdk 34
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['keystore.file'])
+            storePassword keystoreProperties['keystore.password']
+            keyAlias keystoreProperties['keystore.alias']
+            keyPassword keystoreProperties['key.password']
+        }
+    }
 
     defaultConfig {
         applicationId "com.milkit.app"
         minSdk 24
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -29,10 +42,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // Updated API URL for production
-            buildConfigField "String", "API_BASE_URL", "\"https://your-deployed-backend-url.com/api\""
+            buildConfigField "String", "API_BASE_URL", "\"https://ultimate-barbe-nishant-raj-hub-ec147a4c.koyeb.app/api\""
         }
     }
     

@@ -1,0 +1,2 @@
+rootProject.name = "MilkIt"
+include ':app'
