@@ -103,8 +103,9 @@ dependencies {
     // Navigation
     implementation 'androidx.navigation:navigation-compose:2.7.5'
     
-    // ViewModel
+    // ViewModel and Lifecycle
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.7.0'
     
     // Hilt for Dependency Injection
     implementation 'com.google.dagger:hilt-android:2.48'

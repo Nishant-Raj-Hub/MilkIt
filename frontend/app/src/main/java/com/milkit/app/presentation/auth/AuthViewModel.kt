@@ -49,6 +49,14 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
+    
+    fun getCurrentUsername(): String? {
+        return authRepository.getCurrentUsername()
+    }
+    
+    fun getCurrentPhone(): String? {
+        return authRepository.getCurrentPhone()
+    }
 
     fun clearLoginState() {
         _loginState.value = null

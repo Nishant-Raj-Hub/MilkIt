@@ -50,7 +50,7 @@ fun StatsScreen(
             title = "This Week",
             subtitle = getWeekRange(),
             stats = weeklyStats,
-            icon = Icons.Default.CalendarWeek
+            icon = Icons.Default.CalendarToday
         )
 
         // Monthly Stats

@@ -203,9 +203,9 @@ fun ShareScreen(
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = exportState !is Resource.Loading
+                    enabled = exportState !is Resource.Loading<String>
                 ) {
-                    if (exportState is Resource.Loading) {
+                    if (exportState is Resource.Loading<String>) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(20.dp),
                             color = MaterialTheme.colorScheme.onPrimary
@@ -227,9 +227,9 @@ fun ShareScreen(
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = shareState !is Resource.Loading
+                    enabled = shareState !is Resource.Loading<String>
                 ) {
-                    if (shareState is Resource.Loading) {
+                    if (shareState is Resource.Loading<String>) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(20.dp),
                             color = MaterialTheme.colorScheme.primary
@@ -246,7 +246,7 @@ fun ShareScreen(
 
         // Status Messages
         when (exportState) {
-            is Resource.Success -> {
+            is Resource.Success<String> -> {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(
@@ -270,7 +270,7 @@ fun ShareScreen(
                     }
                 }
             }
-            is Resource.Error -> {
+            is Resource.Error<String> -> {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(
@@ -299,7 +299,7 @@ fun ShareScreen(
 
         // Share State Handling
         LaunchedEffect(shareState) {
-            if (shareState is Resource.Success) {
+            if (shareState is Resource.Success<*>) {
                 val shareData = shareState.data!!
                 val shareIntent = Intent().apply {
                     action = Intent.ACTION_SEND

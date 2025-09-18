@@ -2,26 +2,13 @@ package com.milkit.app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.milkit.app.R
 
-// Custom font families
-val InterFontFamily = FontFamily(
-    Font(R.font.inter_regular, FontWeight.Normal),
-    Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_semibold, FontWeight.SemiBold),
-    Font(R.font.inter_bold, FontWeight.Bold)
-)
-
-val PoppinsFontFamily = FontFamily(
-    Font(R.font.poppins_regular, FontWeight.Normal),
-    Font(R.font.poppins_medium, FontWeight.Medium),
-    Font(R.font.poppins_semibold, FontWeight.SemiBold),
-    Font(R.font.poppins_bold, FontWeight.Bold)
-)
+// Using system fonts instead of custom fonts
+val InterFontFamily = FontFamily.Default
+val PoppinsFontFamily = FontFamily.Default
 
 // Set of Material typography styles to start with
 val Typography = Typography(

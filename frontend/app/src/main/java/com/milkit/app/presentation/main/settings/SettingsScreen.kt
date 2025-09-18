@@ -25,8 +25,8 @@ fun SettingsScreen(
     var showLogoutDialog by remember { mutableStateOf(false) }
     var showNotificationSettings by remember { mutableStateOf(false) }
     
-    val username = remember { authViewModel.authRepository.getCurrentUsername() ?: "User" }
-    val phone = remember { authViewModel.authRepository.getCurrentPhone() ?: "" }
+    val username = remember { authViewModel.getCurrentUsername() ?: "User" }
+    val phone = remember { authViewModel.getCurrentPhone() ?: "" }
 
     Column(
         modifier = Modifier
