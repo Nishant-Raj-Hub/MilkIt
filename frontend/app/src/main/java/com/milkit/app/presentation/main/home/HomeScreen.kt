@@ -79,10 +79,14 @@ fun HomeScreen(
                 }
             }
             is Resource.Success -> {
+                val records = when (recentRecords) {
+                    is Resource.Success<*> -> recentRecords.data?.records ?: emptyList()
+                    else -> emptyList()
+                }
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(recentRecords.data?.records ?: emptyList()) { record ->
+                    items(records) { record ->
                         MilkRecordCard(
                             record = record,
                             onConfirmClick = { viewModel.confirmRecord(record.id) }
@@ -97,8 +101,12 @@ fun HomeScreen(
                         containerColor = MaterialTheme.colorScheme.errorContainer
                     )
                 ) {
+                    val errorMessage = when (recentRecords) {
+                        is Resource.Error<*> -> recentRecords.message ?: "Failed to load recent records"
+                        else -> "Failed to load recent records"
+                    }
                     Text(
-                        text = recentRecords.message ?: "Failed to load recent records",
+                        text = errorMessage,
                         color = MaterialTheme.colorScheme.onErrorContainer,
                         modifier = Modifier.padding(16.dp)
                     )
@@ -252,7 +260,7 @@ private fun QuickStatsRow(
                 QuickStatCard(
                     title = "This Week",
                     value = "${stats.weeklyLiters}L",
-                    icon = Icons.Default.CalendarWeek,
+                    icon = Icons.Default.CalendarToday,
                     modifier = Modifier.weight(1f)
                 )
                 QuickStatCard(

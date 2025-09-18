@@ -104,8 +104,12 @@ fun CalendarScreen(
                         containerColor = MaterialTheme.colorScheme.errorContainer
                     )
                 ) {
+                    val errorMessage = when (monthlyRecords) {
+                        is Resource.Error<*> -> monthlyRecords.message ?: "Failed to load calendar data"
+                        else -> "Failed to load calendar data"
+                    }
                     Text(
-                        text = monthlyRecords.message ?: "Failed to load calendar data",
+                        text = errorMessage,
                         color = MaterialTheme.colorScheme.onErrorContainer,
                         modifier = Modifier.padding(16.dp)
                     )

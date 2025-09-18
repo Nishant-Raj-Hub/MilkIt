@@ -227,9 +227,9 @@ fun ShareScreen(
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = shareState !is Resource.Loading<String>
+                    enabled = shareState !is Resource.Loading<*>
                 ) {
-                    if (shareState is Resource.Loading<String>) {
+                    if (shareState is Resource.Loading<*>) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(20.dp),
                             color = MaterialTheme.colorScheme.primary
@@ -287,8 +287,12 @@ fun ShareScreen(
                             tint = MaterialTheme.colorScheme.error
                         )
                         Spacer(modifier = Modifier.width(8.dp))
+                        val errorMessage = when (exportState) {
+                            is Resource.Error<*> -> exportState.message ?: "Export failed"
+                            else -> "Export failed"
+                        }
                         Text(
-                            text = exportState.message ?: "Export failed",
+                            text = errorMessage,
                             color = MaterialTheme.colorScheme.onErrorContainer
                         )
                     }
@@ -299,8 +303,9 @@ fun ShareScreen(
 
         // Share State Handling
         LaunchedEffect(shareState) {
-            if (shareState is Resource.Success<*>) {
-                val shareData = shareState.data!!
+            val successState = shareState as? Resource.Success<*>
+            if (successState != null) {
+                val shareData = successState.data!!
                 val shareIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     type = "text/plain"
