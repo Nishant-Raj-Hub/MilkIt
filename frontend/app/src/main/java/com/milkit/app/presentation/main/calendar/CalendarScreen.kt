@@ -92,9 +92,13 @@ fun CalendarScreen(
                 }
             }
             is Resource.Success -> {
+                val records = when (monthlyRecords) {
+                    is Resource.Success<*> -> monthlyRecords.data?.records ?: emptyList()
+                    else -> emptyList()
+                }
                 CalendarGrid(
                     currentMonth = currentMonth,
-                    records = monthlyRecords.data?.records ?: emptyList()
+                    records = records
                 )
             }
             is Resource.Error -> {

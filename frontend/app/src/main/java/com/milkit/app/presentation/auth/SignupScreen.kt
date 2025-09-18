@@ -237,8 +237,12 @@ fun SignupScreen(
                             containerColor = MaterialTheme.colorScheme.errorContainer
                         )
                     ) {
+                        val errorMessage = when (signupState) {
+                            is Resource.Error<*> -> signupState.message ?: "Signup failed"
+                            else -> "Signup failed"
+                        }
                         Text(
-                            text = signupState.message ?: "Signup failed",
+                            text = errorMessage,
                             color = MaterialTheme.colorScheme.onErrorContainer,
                             style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.padding(12.dp)
